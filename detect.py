@@ -23,6 +23,10 @@ def detect(img_path: str) -> Dict[str, int]:
     img = cv2.imread(img_path, cv2.IMREAD_COLOR)
 
     #TODO: Implement detection method.
+
+    #hsl
+    #kontury
+    #zliczanie obiektów z poszczególnych kolorów
     
     red = 0
     yellow = 0
