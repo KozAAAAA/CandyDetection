@@ -8,7 +8,6 @@ from tqdm import tqdm
 import glob
 import numpy as np
 
-
 def main():
     img_paths = glob.glob("data/*.jpg")
     
@@ -36,6 +35,16 @@ def main():
         yellow_mask = cv2.inRange(hsv_img, lower_yellow_mask, upper_yellow_mask)
         green_mask = cv2.inRange(hsv_img, lower_green_mask, upper_green_mask)
 
+        canny_red = cv2.Canny(red_mask, 30, 150, 3)
+        canny_purple = cv2.Canny(purple_mask, 30, 150, 3)
+        canny_yellow = cv2.Canny(yellow_mask, 30, 150, 3)
+        canny_green = cv2.Canny(green_mask, 30, 150, 3)
+
+        dilated_red = cv2.dilate(canny_red, (1, 1), iterations=3)
+        dilated_purple = cv2.dilate(canny_purple, (1, 1), iterations=0)
+        dilated_yellow = cv2.dilate(canny_yellow, (1, 1), iterations=0)
+        dilated_green = cv2.dilate(canny_green, (1, 1), iterations=0)
+
         img_red_masked = cv2.bitwise_and(img, img, mask = red_mask)
         img_purple_masked = cv2.bitwise_and(img, img, mask = purple_mask)
         img_yellow_masked = cv2.bitwise_and(img, img, mask = yellow_mask)
@@ -53,7 +62,7 @@ def main():
         cv2.resizeWindow("yellow", 500, 500)
         cv2.resizeWindow("green", 500, 500)
         
-        cv2.imshow("normal", img)
+        cv2.imshow("normal", dilated_red)
         cv2.imshow("red", img_red_masked)
         cv2.imshow("purple", img_purple_masked)
         cv2.imshow("yellow", img_yellow_masked)
