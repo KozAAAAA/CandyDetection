@@ -32,18 +32,18 @@ def get_number_of_objects_in_range(img: cv2.Mat, lower_hsv_limits: list[np.ndarr
     dilate_mask = cv2.dilate(opening_mask, kernel , iterations=4)
     contours, _ = cv2.findContours(dilate_mask,cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
     
-    return len(contours), mask
+    return len(contours), dilate_mask
 
 
-img = cv2.imread("data/33.jpg", cv2.IMREAD_COLOR)
+img = cv2.imread("data/00.jpg", cv2.IMREAD_COLOR)
 
-lower_red = [np.array([175, 131, 98]), np.array([0, 131, 98])]
+lower_red = [np.array([175, 165, 137]), np.array([0, 165, 137])]
 upper_red = [np.array([179, 255, 200]), np.array([1, 255, 200])]
 
 lower_purple = [np.array([158,108,24])]
 upper_purple = [np.array([173,255,105])]
 
-lower_yellow = [np.array([10,201,119])]
+lower_yellow = [np.array([10,168,199])]
 upper_yellow = [np.array([30,255,255])]
 
 lower_green = [np.array([31,140,158])]
