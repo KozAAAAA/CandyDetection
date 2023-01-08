@@ -4,7 +4,7 @@ import numpy as np
 def empty(i):
     pass
 
-path = "data/06.jpg"
+path = "data/25.jpg"
 cv2.namedWindow("TrackedBars")
 cv2.resizeWindow("TrackedBars", 640, 240)
 

@@ -52,7 +52,6 @@ cv2.namedWindow("normal", cv2.WINDOW_NORMAL)
 cv2.resizeWindow("normal", 500, 500)
 cv2.resizeWindow("red", 500, 500)
 
-        
 cv2.imshow("normal", img)
 cv2.imshow("red", red_opening)
 

@@ -14,20 +14,20 @@ def main():
     for img_path in img_paths:
         print(img_path)
         img = cv2.imread(img_path, cv2.IMREAD_COLOR)
+
         blurred_img = cv2.GaussianBlur(img, (41, 41), 0)
-
         hsv_img = cv2.cvtColor(blurred_img, cv2.COLOR_BGR2HSV)
-        
-        lower_red_mask = np.array([173, 91, 100])
-        upper_red_mask =np.array([179, 255, 255])
 
-        lower_purple_mask = np.array([140,0,0])
-        upper_purple_mask =np.array([173,255,103])
-        
+        lower_red_mask = np.array([175, 131, 98])
+        upper_red_mask =np.array([179, 255, 200])
+
+        lower_purple_mask = np.array([158,108,24])
+        upper_purple_mask =np.array([173,255,105])
+
         lower_yellow_mask = np.array([10,201,119])
         upper_yellow_mask =np.array([30,255,255])
-        
-        lower_green_mask = np.array([31,188,119])
+
+        lower_green_mask = np.array([31,140,158])
         upper_green_mask =np.array([52,255,255])
 
         red_mask = cv2.inRange(hsv_img, lower_red_mask, upper_red_mask)
@@ -35,20 +35,32 @@ def main():
         yellow_mask = cv2.inRange(hsv_img, lower_yellow_mask, upper_yellow_mask)
         green_mask = cv2.inRange(hsv_img, lower_green_mask, upper_green_mask)
 
-        canny_red = cv2.Canny(red_mask, 30, 150, 3)
-        canny_purple = cv2.Canny(purple_mask, 30, 150, 3)
-        canny_yellow = cv2.Canny(yellow_mask, 30, 150, 3)
-        canny_green = cv2.Canny(green_mask, 30, 150, 3)
+        kernel = np.ones((5,5),np.uint8)
 
-        dilated_red = cv2.dilate(canny_red, (1, 1), iterations=3)
-        dilated_purple = cv2.dilate(canny_purple, (1, 1), iterations=0)
-        dilated_yellow = cv2.dilate(canny_yellow, (1, 1), iterations=0)
-        dilated_green = cv2.dilate(canny_green, (1, 1), iterations=0)
+        red_dilate = cv2.dilate(red_mask, kernel , iterations=3)
+        purple_dilate = cv2.dilate(purple_mask, kernel , iterations=3)
+        yellow_dilate = cv2.dilate(yellow_mask, kernel , iterations=3)
+        green_dilate = cv2.dilate(green_mask, kernel , iterations=3)
 
-        img_red_masked = cv2.bitwise_and(img, img, mask = red_mask)
-        img_purple_masked = cv2.bitwise_and(img, img, mask = purple_mask)
-        img_yellow_masked = cv2.bitwise_and(img, img, mask = yellow_mask)
-        img_green_masked = cv2.bitwise_and(img, img, mask = green_mask)
+        # red_closing = cv2.morphologyEx(red_mask, cv2.MORPH_CLOSE, kernel)
+        # purple_closing = cv2.morphologyEx(purple_mask, cv2.MORPH_CLOSE, kernel)
+        # yellow_closing = cv2.morphologyEx(yellow_mask, cv2.MORPH_CLOSE, kernel)
+        # green_closing = cv2.morphologyEx(green_mask, cv2.MORPH_CLOSE, kernel)
+
+        red_opening = cv2.morphologyEx(red_dilate, cv2.MORPH_OPEN, kernel, iterations=2)
+        purple_opening = cv2.morphologyEx(purple_dilate, cv2.MORPH_OPEN, kernel, iterations=2)
+        yellow_opening = cv2.morphologyEx(yellow_dilate, cv2.MORPH_OPEN, kernel, iterations=2)
+        green_opening = cv2.morphologyEx(green_dilate, cv2.MORPH_OPEN, kernel, iterations=2)
+
+        red_contours, _ = cv2.findContours(red_opening,cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
+        purple_contours, _ = cv2.findContours(purple_opening,cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
+        yellow_contours, _ = cv2.findContours(yellow_opening,cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
+        green_contours, _ = cv2.findContours(green_opening,cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
+
+        print("red = " + str(len(red_contours)))
+        print("purple = " + str(len(purple_contours)))
+        print("yellow = " + str(len(yellow_contours)))
+        print("green = " + str(len(green_contours)))
 
         cv2.namedWindow("normal", cv2.WINDOW_NORMAL)
         cv2.namedWindow("red", cv2.WINDOW_NORMAL)
@@ -62,11 +74,11 @@ def main():
         cv2.resizeWindow("yellow", 500, 500)
         cv2.resizeWindow("green", 500, 500)
         
-        cv2.imshow("normal", dilated_red)
-        cv2.imshow("red", img_red_masked)
-        cv2.imshow("purple", img_purple_masked)
-        cv2.imshow("yellow", img_yellow_masked)
-        cv2.imshow("green", img_green_masked)
+        cv2.imshow("normal", img)
+        cv2.imshow("red", red_opening)
+        cv2.imshow("purple", purple_opening)
+        cv2.imshow("yellow", yellow_opening)
+        cv2.imshow("green", green_opening)
 
         cv2.waitKey(0)
         cv2.destroyAllWindows()
