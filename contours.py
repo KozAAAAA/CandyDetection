@@ -28,14 +28,14 @@ def get_number_of_objects_in_range(img: cv2.Mat, lower_hsv_limits: list[np.ndarr
         temporary_mask = cv2.inRange(hsv_img, lower_hsv_limits[i], upper_hsv_limits[i])
         mask = cv2.bitwise_or(mask, temporary_mask)
 
-    opening_mask = cv2.morphologyEx(mask, cv2.MORPH_OPEN, kernel, iterations=1)
+    opening_mask = cv2.morphologyEx(mask, cv2.MORPH_OPEN, kernel, iterations=3)
     dilate_mask = cv2.dilate(opening_mask, kernel , iterations=4)
     contours, _ = cv2.findContours(dilate_mask,cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
     
-    return len(contours), dilate_mask
+    return len(contours), opening_mask
 
 
-img = cv2.imread("data/00.jpg", cv2.IMREAD_COLOR)
+img = cv2.imread("data/25.jpg", cv2.IMREAD_COLOR)
 
 lower_red = [np.array([175, 165, 137]), np.array([0, 165, 137])]
 upper_red = [np.array([179, 255, 200]), np.array([1, 255, 200])]
@@ -46,7 +46,7 @@ upper_purple = [np.array([173,255,105])]
 lower_yellow = [np.array([10,168,199])]
 upper_yellow = [np.array([30,255,255])]
 
-lower_green = [np.array([31,140,158])]
+lower_green = [np.array([31,135,135])]
 upper_green = [np.array([52,255,255])]
 
 red_count, red_display = get_number_of_objects_in_range(img, lower_red, upper_red)
