@@ -37,25 +37,25 @@ def main():
 
         kernel = np.ones((5,5),np.uint8)
 
-        red_dilate = cv2.dilate(red_mask, kernel , iterations=3)
-        purple_dilate = cv2.dilate(purple_mask, kernel , iterations=3)
-        yellow_dilate = cv2.dilate(yellow_mask, kernel , iterations=3)
-        green_dilate = cv2.dilate(green_mask, kernel , iterations=3)
-
         # red_closing = cv2.morphologyEx(red_mask, cv2.MORPH_CLOSE, kernel)
         # purple_closing = cv2.morphologyEx(purple_mask, cv2.MORPH_CLOSE, kernel)
         # yellow_closing = cv2.morphologyEx(yellow_mask, cv2.MORPH_CLOSE, kernel)
         # green_closing = cv2.morphologyEx(green_mask, cv2.MORPH_CLOSE, kernel)
 
-        red_opening = cv2.morphologyEx(red_dilate, cv2.MORPH_OPEN, kernel, iterations=2)
-        purple_opening = cv2.morphologyEx(purple_dilate, cv2.MORPH_OPEN, kernel, iterations=2)
-        yellow_opening = cv2.morphologyEx(yellow_dilate, cv2.MORPH_OPEN, kernel, iterations=2)
-        green_opening = cv2.morphologyEx(green_dilate, cv2.MORPH_OPEN, kernel, iterations=2)
+        red_opening = cv2.morphologyEx(red_mask, cv2.MORPH_OPEN, kernel, iterations=1)
+        purple_opening = cv2.morphologyEx(purple_mask, cv2.MORPH_OPEN, kernel, iterations=1)
+        yellow_opening = cv2.morphologyEx(yellow_mask, cv2.MORPH_OPEN, kernel, iterations=1)
+        green_opening = cv2.morphologyEx(green_mask, cv2.MORPH_OPEN, kernel, iterations=1)
 
-        red_contours, _ = cv2.findContours(red_opening,cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
-        purple_contours, _ = cv2.findContours(purple_opening,cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
-        yellow_contours, _ = cv2.findContours(yellow_opening,cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
-        green_contours, _ = cv2.findContours(green_opening,cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
+        red_dilate = cv2.dilate(red_opening, kernel , iterations=4)
+        purple_dilate = cv2.dilate(purple_opening, kernel , iterations=4)
+        yellow_dilate = cv2.dilate(yellow_opening, kernel , iterations=4)
+        green_dilate = cv2.dilate(green_opening, kernel , iterations=4)
+
+        red_contours, _ = cv2.findContours(red_dilate,cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
+        purple_contours, _ = cv2.findContours(purple_dilate,cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
+        yellow_contours, _ = cv2.findContours(yellow_dilate,cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
+        green_contours, _ = cv2.findContours(green_dilate,cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
 
         print("red = " + str(len(red_contours)))
         print("purple = " + str(len(purple_contours)))
@@ -75,10 +75,10 @@ def main():
         cv2.resizeWindow("green", 500, 500)
         
         cv2.imshow("normal", img)
-        cv2.imshow("red", red_opening)
-        cv2.imshow("purple", purple_opening)
-        cv2.imshow("yellow", yellow_opening)
-        cv2.imshow("green", green_opening)
+        cv2.imshow("red", red_dilate)
+        cv2.imshow("purple", purple_dilate)
+        cv2.imshow("yellow", yellow_dilate)
+        cv2.imshow("green", green_dilate)
 
         cv2.waitKey(0)
         cv2.destroyAllWindows()
