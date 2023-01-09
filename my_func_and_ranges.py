@@ -7,7 +7,7 @@ upper_red = [np.array([179, 255, 200]), np.array([1, 255, 200])]
 lower_purple = [np.array([158,108,24])]
 upper_purple = [np.array([173,255,105])]
 
-lower_yellow = [np.array([10,193,199])]
+lower_yellow = [np.array([10,168,199])]
 upper_yellow = [np.array([30,255,255])]
 
 lower_green = [np.array([31,135,135])]
