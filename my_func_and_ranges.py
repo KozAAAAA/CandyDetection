@@ -1,7 +1,7 @@
 import cv2
 import numpy as np
 
-lower_red = [np.array([175, 130, 135]), np.array([0, 130, 135])]
+lower_red = [np.array([175, 165, 137]), np.array([0, 165, 137])]
 upper_red = [np.array([179, 255, 200]), np.array([1, 255, 200])]
 
 lower_purple = [np.array([158,108,24])]
