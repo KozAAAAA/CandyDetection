@@ -8,6 +8,7 @@ from tqdm import tqdm
 
 import numpy as np
 from my_func_and_ranges import *
+from my_check import my_check
 
 
 def detect(img_path: str) -> Dict[str, int]:
@@ -26,9 +27,6 @@ def detect(img_path: str) -> Dict[str, int]:
     img = cv2.imread(img_path, cv2.IMREAD_COLOR)
 
     #TODO: Implement detection method.
-
-    print(img_path)
-
     red_count, red_display = get_number_of_objects_in_range(img, lower_red, upper_red)
     purple_count, purple_display = get_number_of_objects_in_range(img, lower_purple, upper_purple)
     yellow_count, yellow_display = get_number_of_objects_in_range(img, lower_yellow, upper_yellow)
@@ -61,7 +59,9 @@ def main(data_path: Path, output_file_path: Path):
 
     with open(output_file_path, 'w') as ofp:
         json.dump(results, ofp)
+    my_check()
 
 
 if __name__ == '__main__':
     main()
+    
