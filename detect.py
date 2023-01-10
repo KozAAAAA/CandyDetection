@@ -26,6 +26,8 @@ def detect(img_path: str) -> Dict[str, int]:
 
     #TODO: Implement detection method.
 
+    print(img_path)
+
     blurred_img = cv2.GaussianBlur(img, (41, 41), 0)
     hsv_img = cv2.cvtColor(blurred_img, cv2.COLOR_BGR2HSV)
 
@@ -62,10 +64,10 @@ def detect(img_path: str) -> Dict[str, int]:
     yellow_contours, _ = cv2.findContours(yellow_opening,cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
     green_contours, _ = cv2.findContours(green_opening,cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
 
-    print("red = " + str(len(red_contours)))
-    print("purple = " + str(len(purple_contours)))
-    print("yellow = " + str(len(yellow_contours)))
-    print("green = " + str(len(green_contours)))
+    # print("red = " + str(len(red_contours)))
+    # print("purple = " + str(len(purple_contours)))
+    # print("yellow = " + str(len(yellow_contours)))
+    # print("green = " + str(len(green_contours)))
     
     red = len(red_contours)
     yellow = len(yellow_contours)
