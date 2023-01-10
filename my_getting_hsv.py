@@ -4,7 +4,7 @@ import numpy as np
 def empty(i):
     pass
 
-path = "data/05.jpg"
+path = "data/28.jpg"
 cv2.namedWindow("TrackedBars")
 cv2.resizeWindow("TrackedBars", 640, 240)
 
@@ -28,7 +28,7 @@ def on_trackbar(val):
     lower = np.array([hue_min, sat_min, val_min])
     upper = np.array([hue_max, sat_max, val_max])
 
-    blurred_img = cv2.GaussianBlur(img, (41, 41), 0)
+    blurred_img = cv2.GaussianBlur(img, (5, 5), 0)
     img_hsv = cv2.cvtColor(blurred_img, cv2.COLOR_BGR2HSV)
     imgMASK = cv2.inRange(img_hsv, lower, upper)
 

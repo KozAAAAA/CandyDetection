@@ -38,5 +38,3 @@ def my_check():
 
     file_results.close()
     file_correct_results.close()
-
-my_check()
