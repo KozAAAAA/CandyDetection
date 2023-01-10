@@ -31,4 +31,4 @@ def get_number_of_objects_in_range(img: cv2.Mat, lower_hsv_limits: list[np.ndarr
     dilate_mask = cv2.dilate(opening_mask, kernel , iterations=4)
     contours, _ = cv2.findContours(dilate_mask,cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_NONE)
     
-    return len(contours), opening_mask
+    return len(contours), dilate_mask

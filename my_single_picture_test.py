@@ -15,7 +15,7 @@ cv2.resizeWindow("purple", 500, 500)
 cv2.resizeWindow("yellow", 500, 500)
 cv2.resizeWindow("green", 500, 500)
 
-img = cv2.imread("data/03.jpg", cv2.IMREAD_COLOR)
+img = cv2.imread("data/05.jpg", cv2.IMREAD_COLOR)
 
 red_count, red_display = get_number_of_objects_in_range(img, lower_red, upper_red)
 purple_count, purple_display = get_number_of_objects_in_range(img, lower_purple, upper_purple)

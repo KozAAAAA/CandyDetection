@@ -26,15 +26,17 @@ def my_check():
 
     try:
         for key, values in diff['values_changed'].items() :
-            print (color.BOLD,color.CYAN,"@ in", key, ":", color.END, color.END)
-            print(color.GREEN,"   correct: ",color.END, values["old_value"])
-            print(color.RED,"   detected:",color.END, values["new_value"], "\n")
+            print (color.BOLD + color.CYAN + "@ In " + str(key) + ":" + color.END + color.END)
+            print(color.GREEN + "correct: " + color.END + str(values["old_value"]))
+            print(color.RED + "detected:" + color.END + str(values["new_value"]) + "\n")
             total_errors+=1
 
     except:
         print("results are 100% correct")
 
-    print(color.BOLD, color.RED, "@ The number of detected errors is:", color.END, color.END, total_errors)
+    print(color.BOLD + color.RED + "@ The number of detected errors is: " + color.END + color.END + str(total_errors))
 
     file_results.close()
     file_correct_results.close()
+
+my_check()
